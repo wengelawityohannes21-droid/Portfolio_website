@@ -27,8 +27,11 @@ export function Research({ items }: ResearchProps) {
         <div className="mx-auto max-w-6xl space-y-10">
           {items.map((item, index) => (
             <Reveal key={item.id} delay={index * 0.08}>
-              <article className="paper-texture relative overflow-hidden rounded-[0.3rem] border border-emerald-950/10 px-6 py-8 shadow-[0_30px_80px_rgba(21,55,35,0.11)] md:px-12 md:py-12 dark:border-white/10">
+              <article className="paper-texture relative overflow-hidden rounded-[0.3rem] border border-emerald-950/10 px-6 py-8 shadow-[10px_12px_0_rgba(255,255,255,0.8),20px_24px_70px_rgba(21,55,35,0.14)] md:px-12 md:py-12 dark:border-white/10 dark:shadow-[10px_12px_0_rgba(31,41,55,0.8),20px_24px_70px_rgba(0,0,0,0.25)]">
                 <div className="absolute left-0 top-0 h-1 w-full bg-brand" />
+                <span className="absolute right-5 top-4 font-serif text-6xl italic text-brand/[0.055] md:text-8xl">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <div className="mb-10 flex flex-wrap items-start justify-between gap-5 border-b border-emerald-950/15 pb-6 dark:border-white/10">
                   <div className="flex items-center gap-3">
                     <span className="flex h-10 w-10 items-center justify-center rounded-full border border-brand/20 text-brand">
@@ -57,6 +60,10 @@ export function Research({ items }: ResearchProps) {
 
                 <div className="grid gap-10 lg:grid-cols-[1.25fr_0.75fr]">
                   <div>
+                    <div className="mb-7 inline-flex items-center gap-3 border-y border-emerald-950/15 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-brand dark:border-white/10">
+                      <span className="h-2 w-2 rounded-full bg-amber-400" />
+                      Current study
+                    </div>
                     <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-brand">
                       Title
                     </p>
@@ -160,6 +167,10 @@ export function Research({ items }: ResearchProps) {
                     ) : null}
                   </div>
                 )}
+                <div className="mt-10 flex items-center justify-between border-t border-emerald-950/10 pt-4 font-mono text-[9px] uppercase tracking-[0.18em] text-gray-400 dark:border-white/10">
+                  <span>Field note · Public health evidence</span>
+                  <span>Page {String(index + 1).padStart(2, "0")}</span>
+                </div>
               </article>
             </Reveal>
           ))}

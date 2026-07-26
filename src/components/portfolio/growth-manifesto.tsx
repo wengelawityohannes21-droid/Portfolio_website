@@ -15,6 +15,14 @@ export function GrowthManifesto() {
       >
         <Leaf className="h-52 w-52" strokeWidth={0.6} />
       </motion.div>
+      <motion.div
+        aria-hidden="true"
+        animate={{ rotate: [0, -9, 0], y: [0, 16, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -right-16 bottom-8 text-emerald-300/[0.08]"
+      >
+        <Leaf className="h-72 w-72 -scale-x-100" strokeWidth={0.5} />
+      </motion.div>
 
       <div className="section-container relative text-center">
         <motion.div
@@ -29,12 +37,26 @@ export function GrowthManifesto() {
           The philosophy behind the work
         </p>
         <h2 className="mx-auto mt-6 max-w-5xl text-balance text-5xl font-semibold tracking-[-0.06em] sm:text-6xl md:text-8xl">
-          I nourish.
-          <br />
-          I build.
-          <br />
-          <span className="text-emerald-300">I grow.</span>
+          {["I nourish.", "I build.", "I grow."].map((line, index) => (
+            <motion.span
+              key={line}
+              initial={{ opacity: 0, y: 45, filter: "blur(8px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.16, duration: 0.75 }}
+              className={`block ${index === 2 ? "text-emerald-300" : ""}`}
+            >
+              {line}
+            </motion.span>
+          ))}
         </h2>
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.55, duration: 1 }}
+          className="mx-auto mt-8 h-px max-w-md bg-gradient-to-r from-transparent via-emerald-300/60 to-transparent"
+        />
         <p className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-emerald-50/65 md:text-lg">
           From evidence to organizations, and from young ideas to resilient
           systems—every project begins with care and grows through collective

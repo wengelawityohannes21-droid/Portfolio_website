@@ -1,7 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowUpRight, ChevronDown, Download, Mail, MapPin, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  ArrowUpRight,
+  ChevronDown,
+  Download,
+  FlaskConical,
+  Leaf,
+  Mail,
+  MapPin,
+  Sparkles,
+  Sprout,
+} from "lucide-react";
 import { Reveal } from "@/components/portfolio/reveal";
 import { TypingEffect } from "@/components/portfolio/typing-effect";
 import type { ProfileData, SiteSettingsData } from "@/types/portfolio";
@@ -34,7 +45,7 @@ export function Hero({ profile, settings }: HeroProps) {
                 <Sparkles className="h-3.5 w-3.5" />
                 Research · Leadership · Innovation
               </div>
-              <h1 className="text-balance text-4xl font-semibold tracking-tight text-ink dark:text-white sm:text-5xl md:text-6xl">
+              <h1 className="text-balance text-5xl font-semibold leading-[0.94] tracking-[-0.065em] text-ink dark:text-white sm:text-6xl md:text-7xl">
                 {profile.fullName}
               </h1>
               <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 md:text-xl">
@@ -48,6 +59,10 @@ export function Hero({ profile, settings }: HeroProps) {
                   {profile.tagline}
                 </p>
               ) : null}
+              <div className="mt-7 flex items-center gap-4 font-serif text-lg italic text-ink/70 dark:text-white/70">
+                <span className="h-px w-10 bg-brand/40" />
+                I nourish, build, and grow.
+              </div>
 
               <div className="mt-8 flex flex-wrap gap-3">
                 {cvUrl ? (
@@ -76,9 +91,34 @@ export function Hero({ profile, settings }: HeroProps) {
 
           <Reveal delay={0.15} direction="right">
             <div className="relative mx-auto w-full max-w-md lg:max-w-none lg:py-8">
-              <div className="absolute -inset-3 rounded-[2rem] border border-brand/20 lg:inset-3 lg:translate-x-6 lg:translate-y-6" />
-              <div className="relative overflow-hidden rounded-[2rem] border border-gray-200 bg-white p-2 shadow-2xl shadow-slate-950/15 dark:border-gray-800 dark:bg-gray-900">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-gray-100 dark:bg-gray-800">
+              <motion.div
+                aria-hidden="true"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 42, repeat: Infinity, ease: "linear" }}
+                className="absolute -inset-10 rounded-full border border-dashed border-brand/20"
+              >
+                <span className="absolute left-1/2 top-0 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand text-white shadow-card">
+                  <Sprout className="h-4 w-4" />
+                </span>
+                <span className="absolute bottom-[12%] right-[2%] flex h-8 w-8 items-center justify-center rounded-full border border-brand/20 bg-white/90 text-brand shadow-soft backdrop-blur dark:bg-gray-900/90">
+                  <FlaskConical className="h-3.5 w-3.5" />
+                </span>
+              </motion.div>
+              <motion.div
+                aria-hidden="true"
+                animate={{ rotate: [8, 15, 8], y: [0, -8, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -right-8 -top-10 text-brand/20"
+              >
+                <Leaf className="h-32 w-32" strokeWidth={0.7} />
+              </motion.div>
+              <div className="absolute -inset-3 rounded-[2.4rem] border border-brand/20 lg:inset-3 lg:translate-x-6 lg:translate-y-6" />
+              <motion.div
+                whileHover={{ y: -8, rotate: -0.5 }}
+                transition={{ type: "spring", stiffness: 180, damping: 18 }}
+                className="relative overflow-hidden rounded-[2.4rem_2.4rem_6rem_2.4rem] border border-gray-200 bg-white p-2 shadow-2xl shadow-slate-950/15 dark:border-gray-800 dark:bg-gray-900"
+              >
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[1.7rem_1.7rem_5.3rem_1.7rem] bg-gray-100 dark:bg-gray-800">
                   {profile.photoUrl ? (
                     <Image
                       src={profile.photoUrl}
@@ -96,7 +136,7 @@ export function Hero({ profile, settings }: HeroProps) {
                   )}
                   <div className="image-veil opacity-30" />
                 </div>
-              </div>
+              </motion.div>
 
               <div className="absolute -bottom-2 -left-4 rounded-2xl border border-white/70 bg-white/90 px-4 py-3 shadow-card backdrop-blur-xl dark:border-gray-700 dark:bg-gray-900/90 lg:bottom-14 lg:-left-12">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand">

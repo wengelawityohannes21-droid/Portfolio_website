@@ -182,14 +182,27 @@ export function GrowthJourney({
               className="h-full w-0.5 origin-bottom bg-gradient-to-t from-amber-700/50 via-brand/70 to-emerald-300"
             />
           </div>
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.35, duration: 1 }}
+            className="absolute bottom-7 left-5 hidden h-px w-28 origin-left -rotate-[18deg] bg-gradient-to-r from-amber-700/50 to-transparent lg:left-1/2 lg:block"
+          />
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.45, duration: 1 }}
+            className="absolute bottom-7 right-1/2 hidden h-px w-24 origin-right rotate-[22deg] bg-gradient-to-l from-amber-700/50 to-transparent lg:block"
+          />
           <div className="absolute bottom-0 left-2.5 flex h-6 w-6 items-center justify-center rounded-full border border-amber-700/20 bg-amber-50 text-amber-800 lg:left-1/2 lg:-translate-x-1/2 dark:bg-amber-950">
             <CircleDot className="h-3.5 w-3.5" />
           </div>
           <motion.div
-            initial={{ opacity: 0, scale: 0.6 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="absolute -top-4 left-0 flex h-10 w-10 items-center justify-center rounded-full bg-brand text-white shadow-card lg:left-1/2 lg:-translate-x-1/2"
+            animate={{ y: [0, -5, 0], rotate: [0, 3, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-4 left-0 flex h-10 w-10 items-center justify-center rounded-full bg-brand text-white shadow-[0_0_0_12px_rgba(22,163,74,0.08)] lg:left-1/2 lg:-translate-x-1/2"
           >
             <Sprout className="h-5 w-5" />
           </motion.div>
@@ -204,9 +217,32 @@ export function GrowthJourney({
                   key={stage.id}
                   className="relative grid gap-8 pl-14 lg:grid-cols-2 lg:gap-20 lg:pl-0"
                 >
+                        <motion.span
+                          initial={{ scaleX: 0 }}
+                          whileInView={{ scaleX: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.2, duration: 0.8 }}
+                          className={`absolute top-[1.15rem] hidden h-px w-16 bg-gradient-to-r from-brand/50 to-brand/5 lg:block ${
+                            copyOnLeft
+                              ? "left-1/2 origin-left"
+                              : "right-1/2 origin-right rotate-180"
+                          }`}
+                        />
                   <span className="absolute left-1.5 top-2 flex h-7 w-7 items-center justify-center rounded-full border-4 border-canvas bg-brand text-white shadow-soft lg:left-1/2 lg:-translate-x-1/2 dark:border-gray-900">
                     <Icon className="h-3 w-3" />
                   </span>
+                        <motion.span
+                          aria-hidden="true"
+                          initial={{ opacity: 0, scale: 0.5, rotate: copyOnLeft ? 18 : -18 }}
+                          whileInView={{ opacity: 1, scale: 1, rotate: copyOnLeft ? 38 : -38 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.45, type: "spring" }}
+                          className={`absolute top-7 hidden text-brand/25 lg:block ${
+                            copyOnLeft ? "left-[calc(50%+2.5rem)]" : "right-[calc(50%+2.5rem)]"
+                          }`}
+                        >
+                          <Leaf className="h-12 w-12" strokeWidth={1} />
+                        </motion.span>
 
                   <Reveal
                     direction={copyOnLeft ? "right" : "left"}

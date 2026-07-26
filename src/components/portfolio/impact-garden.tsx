@@ -25,7 +25,7 @@ type ImpactStat = {
 const IMPACT_STATS: ImpactStat[] = [
   {
     value: 1,
-    label: "Research project",
+    label: "Research projects",
     detail: "Evidence in motion",
     icon: FlaskConical,
     minimumDigits: 2,
@@ -90,9 +90,18 @@ export function ImpactGarden() {
               </p>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+            <div className="relative grid gap-3 sm:grid-cols-2 lg:grid-cols-12">
+              <div className="pointer-events-none absolute -bottom-10 left-1/2 hidden h-28 w-px bg-gradient-to-t from-brand/30 to-transparent lg:block" />
               {IMPACT_STATS.map((stat, index) => {
                 const Icon = stat.icon;
+                const spanClass =
+                  index < 3
+                    ? "lg:col-span-4"
+                    : index === 3
+                      ? "lg:col-span-4"
+                      : index === 4
+                        ? "lg:col-span-5"
+                        : "lg:col-span-3";
                 return (
                   <motion.div
                     key={stat.label}
@@ -100,10 +109,13 @@ export function ImpactGarden() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-40px" }}
                     transition={{ delay: index * 0.07, duration: 0.5 }}
-                    className="group relative rounded-3xl border border-brand/10 bg-white/70 p-5 transition-all hover:-translate-y-2 hover:border-brand/25 hover:bg-white dark:bg-gray-900/70 dark:hover:bg-gray-900"
+                    whileHover={{ y: -8, rotate: index % 2 === 0 ? -0.4 : 0.4 }}
+                    className={`group relative min-h-48 overflow-hidden rounded-3xl border border-brand/10 bg-white/70 p-6 transition-colors hover:border-brand/25 hover:bg-white dark:bg-gray-900/70 dark:hover:bg-gray-900 ${spanClass}`}
                   >
+                    <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full border border-brand/10 transition-transform duration-700 group-hover:scale-125" />
+                    <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-brand/[0.04]" />
                     <Icon className="h-5 w-5 text-brand/70 transition-transform group-hover:-rotate-6 group-hover:scale-110" />
-                    <div className="mt-8 text-4xl font-semibold tracking-[-0.06em] text-ink dark:text-white">
+                    <div className="mt-8 text-5xl font-semibold tracking-[-0.07em] text-ink dark:text-white">
                       <AnimatedCounter
                         value={stat.value}
                         suffix={stat.suffix}
@@ -114,7 +126,7 @@ export function ImpactGarden() {
                       {stat.label}
                     </p>
                     <p className="mt-1 text-xs text-gray-400">{stat.detail}</p>
-                    <span className="absolute bottom-0 left-1/2 h-2 w-px bg-brand/25 transition-all group-hover:h-5" />
+                    <span className="absolute bottom-0 left-8 h-1 w-12 origin-left rounded-full bg-brand/25 transition-all duration-500 group-hover:w-24 group-hover:bg-brand/60" />
                   </motion.div>
                 );
               })}
