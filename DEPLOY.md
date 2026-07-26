@@ -50,11 +50,11 @@ datasource db {
 
 3. Deploy
 
-The build automatically runs `prisma db push`, which creates all tables in your Neon database on first deploy. After the first deploy, set `NEXTAUTH_URL` to the real Vercel URL and redeploy.
+The build automatically creates the tables and seeds the CV portfolio content when the database is empty. Later deploys detect the existing profile and skip the seed, preserving all CMS edits. After the first deploy, set `NEXTAUTH_URL` to the real Vercel URL and redeploy.
 
-## 5. Seed the production database (one time only)
+## 5. Manual seed (only if needed)
 
-The Neon database starts empty — no admin user, no profile content. Seed it once from your machine (never run this automatically in the build, since it wipes and re-creates Profile/SiteSettings, which would erase any edits you make later in the admin dashboard):
+The deployment normally handles the first seed automatically. If it is ever necessary to seed a separate empty database manually:
 
 ```bash
 # Temporarily point at your Neon database, then run:
@@ -62,7 +62,7 @@ set DATABASE_URL=postgresql://...your-neon-url...   (Windows PowerShell: $env:DA
 npm run db:seed
 ```
 
-After this, log in at `https://your-site.vercel.app/admin/login` and all future edits go through the dashboard — never re-run the seed script against production.
+After this, log in at `https://your-site.vercel.app/admin/login`. Do not run the manual seed again after making CMS edits.
 
 ## 6. Admin
 

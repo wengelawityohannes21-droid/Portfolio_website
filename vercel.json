@@ -1,4 +1,4 @@
 {
   "framework": "nextjs",
-  "buildCommand": "prisma generate && prisma db push --accept-data-loss --skip-generate && next build"
+  "buildCommand": "prisma generate && prisma db push --accept-data-loss --skip-generate && tsx prisma/seed.ts --if-empty && next build"
 }

@@ -10,6 +10,17 @@ function j(data: unknown) {
 async function main() {
   const email = process.env.ADMIN_EMAIL || "Wengelawityohannes21@gmail.com";
   const password = process.env.ADMIN_PASSWORD || "Admin@2026!";
+
+  // Vercel runs the seed with --if-empty during deployment. This makes the
+  // initial production bootstrap safe without overwriting later CMS edits.
+  if (process.argv.includes("--if-empty")) {
+    const existingProfiles = await prisma.profile.count();
+    if (existingProfiles > 0) {
+      console.log("Database already contains portfolio content; skipping seed.");
+      return;
+    }
+  }
+
   const passwordHash = await bcrypt.hash(password, 12);
 
   await prisma.user.upsert({
@@ -656,7 +667,7 @@ async function main() {
   });
 
   console.log("✅ Database seeded with Wengelawit Yohannes portfolio content");
-  console.log(`🔐 Admin login: ${email} / ${password}`);
+  console.log(`🔐 Admin account created for ${email}`);
 }
 
 main()
