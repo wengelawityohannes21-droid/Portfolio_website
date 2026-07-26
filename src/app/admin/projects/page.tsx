@@ -13,7 +13,7 @@ export default function AdminProjectsPage() {
         { name: "techStack", label: "Tech Stack (comma-separated)", type: "json-array" },
         { name: "githubUrl", label: "GitHub URL" },
         { name: "liveUrl", label: "Live URL" },
-        { name: "thumbnailUrl", label: "Thumbnail URL" },
+        { name: "thumbnailUrl", label: "Project cover image", type: "media", folder: "projects" },
         { name: "gallery", label: "Gallery URLs (comma-separated)", type: "json-array" },
         { name: "featured", label: "Featured", type: "checkbox" },
         { name: "published", label: "Published", type: "checkbox" },

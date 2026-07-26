@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Briefcase } from "lucide-react";
 import { Reveal } from "@/components/portfolio/reveal";
 import { SectionHeading } from "@/components/portfolio/section-heading";
@@ -41,6 +42,19 @@ export function Experience({ items }: ExperienceProps) {
                 </span>
 
                 <div className="card-surface">
+                  {item.imageUrl ? (
+                    <div className="relative mb-6 aspect-[21/8] overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-800">
+                      <Image
+                        src={item.imageUrl}
+                        alt={`${item.organization} — ${item.title}`}
+                        fill
+                        unoptimized
+                        className="object-cover transition-transform duration-700 hover:scale-105"
+                        sizes="(max-width: 1024px) 100vw, 800px"
+                      />
+                      <div className="image-veil opacity-60" />
+                    </div>
+                  ) : null}
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <h3 className="text-xl font-semibold text-ink dark:text-white">

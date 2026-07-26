@@ -13,8 +13,8 @@ export default function AdminCertificationsPage() {
         { name: "issuer", label: "Issuer" },
         { name: "issueDate", label: "Issue Date", type: "date" },
         { name: "credentialUrl", label: "Credential URL" },
-        { name: "fileUrl", label: "File URL" },
-        { name: "imageUrl", label: "Image URL" },
+        { name: "fileUrl", label: "Certificate file", type: "media", folder: "certificates" },
+        { name: "imageUrl", label: "Certificate preview image", type: "media", folder: "certificates" },
         { name: "published", label: "Published", type: "checkbox" },
       ]}
     />

@@ -36,6 +36,10 @@
     @apply bg-canvas text-ink antialiased;
     background-color: rgb(var(--background));
     color: rgb(var(--foreground));
+    background-image:
+      radial-gradient(circle at 10% 12%, rgb(var(--brand) / 0.055), transparent 28rem),
+      radial-gradient(circle at 88% 36%, rgb(31 41 55 / 0.035), transparent 24rem);
+    background-attachment: fixed;
   }
 
   ::selection {
@@ -54,11 +58,11 @@
   }
 
   .section-padding {
-    @apply py-16 md:py-24;
+    @apply py-20 md:py-28;
   }
 
   .card-surface {
-    @apply rounded-2xl border border-gray-200 bg-white p-6 shadow-soft transition-shadow hover:shadow-card dark:border-gray-800 dark:bg-gray-900;
+    @apply rounded-3xl border border-gray-200/80 bg-white/90 p-6 shadow-soft backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand/20 hover:shadow-card dark:border-gray-800 dark:bg-gray-900/90;
   }
 
   .glass-nav {
@@ -78,5 +82,28 @@
     @apply prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-ink dark:prose-headings:text-white;
     @apply prose-p:leading-relaxed prose-p:text-gray-600 dark:prose-p:text-gray-300;
     @apply prose-a:text-brand prose-a:no-underline hover:prose-a:underline;
+  }
+
+  .visual-grid {
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.08) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+  }
+
+  .image-veil {
+    @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

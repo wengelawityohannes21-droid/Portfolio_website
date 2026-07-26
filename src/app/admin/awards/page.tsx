@@ -13,6 +13,7 @@ export default function AdminAwardsPage() {
         { name: "issuer", label: "Issuer" },
         { name: "date", label: "Date", type: "date" },
         { name: "description", label: "Description", type: "textarea" },
+        { name: "imageUrl", label: "Award or ceremony image", type: "media" },
         { name: "published", label: "Published", type: "checkbox" },
       ]}
     />

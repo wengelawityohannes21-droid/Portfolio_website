@@ -1,3 +1,5 @@
+import { unlink } from "fs/promises";
+import path from "path";
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/api-auth";
 import {
@@ -10,6 +12,45 @@ import {
 import { prisma } from "@/lib/prisma";
 
 type RouteContext = { params: Promise<{ resource: string; id: string }> };
+
+async function deleteStoredMedia(url: string) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const bucket = process.env.SUPABASE_STORAGE_BUCKET || "portfolio-media";
+  const publicPrefix = supabaseUrl
+    ? `${supabaseUrl}/storage/v1/object/public/${encodeURIComponent(bucket)}/`
+    : null;
+
+  if (publicPrefix && serviceKey && url.startsWith(publicPrefix)) {
+    const objectPath = url.slice(publicPrefix.length);
+    const response = await fetch(
+      `${supabaseUrl}/storage/v1/object/${encodeURIComponent(bucket)}/${objectPath}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${serviceKey}`,
+          apikey: serviceKey,
+        },
+      }
+    );
+
+    if (!response.ok && response.status !== 404) {
+      throw new Error(`Cloud file deletion failed (${response.status})`);
+    }
+    return;
+  }
+
+  if (url.startsWith("/uploads/")) {
+    const uploadsRoot = path.resolve(process.cwd(), "public", "uploads");
+    const filePath = path.resolve(process.cwd(), "public", url.replace(/^\/+/, ""));
+    if (!filePath.startsWith(`${uploadsRoot}${path.sep}`)) {
+      throw new Error("Invalid upload path");
+    }
+    await unlink(filePath).catch((error: NodeJS.ErrnoException) => {
+      if (error.code !== "ENOENT") throw error;
+    });
+  }
+}
 
 export async function GET(_req: NextRequest, context: RouteContext) {
   const { error } = await requireAdmin();
@@ -130,9 +171,16 @@ export async function DELETE(_req: NextRequest, context: RouteContext) {
 
   try {
     const delegate = getDelegate(prisma, resource);
+    if (resource === "media") {
+      const asset = (await delegate.findUnique({ where: { id } })) as {
+        url?: string;
+      } | null;
+      if (asset?.url) await deleteStoredMedia(asset.url);
+    }
     await delegate.delete({ where: { id } });
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (error) {
+    console.error(error);
     return NextResponse.json({ error: "Failed to delete item" }, { status: 500 });
   }
 }

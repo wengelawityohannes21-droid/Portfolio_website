@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { FormField } from "@/components/admin/form-field";
+import { MediaPicker } from "@/components/admin/media-picker";
 
 type Skill = {
   id: string;
@@ -17,6 +18,7 @@ type Skill = {
 type Category = {
   id: string;
   name: string;
+  imageUrl: string | null;
   sortOrder: number;
   published: boolean;
   skills: Skill[];
@@ -27,7 +29,7 @@ export default function AdminSkillsPage() {
   const [loading, setLoading] = useState(true);
   const [newCategory, setNewCategory] = useState("");
   const [addingSkillTo, setAddingSkillTo] = useState<string | null>(null);
-  const [newSkill, setNewSkill] = useState({ name: "", proficiency: 80 });
+  const [newSkill, setNewSkill] = useState({ name: "" });
 
   const fetchCategories = useCallback(async () => {
     setLoading(true);
@@ -71,14 +73,13 @@ export default function AdminSkillsPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: newSkill.name.trim(),
-        proficiency: newSkill.proficiency,
         categoryId,
         published: true,
       }),
     });
     if (res.ok) {
       setAddingSkillTo(null);
-      setNewSkill({ name: "", proficiency: 80 });
+      setNewSkill({ name: "" });
       fetchCategories();
       toast.success("Skill added");
     }
@@ -87,6 +88,24 @@ export default function AdminSkillsPage() {
   const deleteSkill = async (id: string) => {
     await fetch(`/api/admin/skills/${id}`, { method: "DELETE" });
     fetchCategories();
+  };
+
+  const updateCategoryImage = async (id: string, imageUrl: string) => {
+    const res = await fetch(`/api/admin/skill-categories/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ imageUrl: imageUrl || null }),
+    });
+    if (res.ok) {
+      setCategories((current) =>
+        current.map((category) =>
+          category.id === id ? { ...category, imageUrl: imageUrl || null } : category
+        )
+      );
+      toast.success(imageUrl ? "Category visual updated" : "Category visual removed");
+    } else {
+      toast.error("Failed to update category visual");
+    }
   };
 
   if (loading) {
@@ -138,6 +157,14 @@ export default function AdminSkillsPage() {
               </button>
             </div>
 
+            <MediaPicker
+              label="Category visual (optional)"
+              folder="skills"
+              value={cat.imageUrl ?? ""}
+              onChange={(url) => updateCategoryImage(cat.id, url)}
+              className="mb-5 rounded-xl border border-slate-100 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-slate-950/40"
+            />
+
             <div className="space-y-2">
               {cat.skills?.map((skill) => (
                 <div
@@ -148,7 +175,6 @@ export default function AdminSkillsPage() {
                     <span className="font-medium text-slate-800 dark:text-slate-200">
                       {skill.name}
                     </span>
-                    <span className="ml-2 text-xs text-slate-500">{skill.proficiency}%</span>
                   </div>
                   <button
                     type="button"
@@ -167,14 +193,6 @@ export default function AdminSkillsPage() {
                   label="Skill name"
                   value={newSkill.name}
                   onChange={(e) => setNewSkill((s) => ({ ...s, name: e.target.value }))}
-                />
-                <FormField
-                  label="Proficiency"
-                  type="number"
-                  value={String(newSkill.proficiency)}
-                  onChange={(e) =>
-                    setNewSkill((s) => ({ ...s, proficiency: Number(e.target.value) }))
-                  }
                 />
                 <button
                   type="button"

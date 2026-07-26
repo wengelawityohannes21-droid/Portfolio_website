@@ -46,6 +46,7 @@ export type EducationItem = {
   institution: string;
   degree: string;
   field: string | null;
+  imageUrl: string | null;
   startDate: string | null;
   endDate: string | null;
   current: boolean;
@@ -59,6 +60,7 @@ export type ExperienceItem = {
   title: string;
   organization: string;
   location: string | null;
+  imageUrl: string | null;
   startDate: string | null;
   endDate: string | null;
   current: boolean;
@@ -72,6 +74,7 @@ export type LeadershipItem = {
   id: string;
   title: string;
   organization: string;
+  imageUrl: string | null;
   startDate: string | null;
   endDate: string | null;
   current: boolean;
@@ -122,6 +125,7 @@ export type SkillItem = {
 export type SkillCategoryItem = {
   id: string;
   name: string;
+  imageUrl: string | null;
   sortOrder: number;
   skills: SkillItem[];
 };
@@ -143,6 +147,7 @@ export type AwardItem = {
   issuer: string | null;
   date: string | null;
   description: string | null;
+  imageUrl: string | null;
   sortOrder: number;
 };
 
@@ -150,6 +155,7 @@ export type VolunteerItem = {
   id: string;
   title: string;
   organization: string | null;
+  imageUrl: string | null;
   startDate: string | null;
   endDate: string | null;
   current: boolean;

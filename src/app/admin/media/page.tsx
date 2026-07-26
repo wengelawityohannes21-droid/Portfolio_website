@@ -47,11 +47,14 @@ export default function AdminMediaPage() {
         method: "POST",
         body: formData,
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const result = await res.json().catch(() => null);
+        throw new Error(result?.error || "Upload failed");
+      }
       toast.success("Uploaded");
       fetchAssets();
-    } catch {
-      toast.error("Upload failed");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Upload failed");
     } finally {
       setUploading(false);
       e.target.value = "";
@@ -60,9 +63,13 @@ export default function AdminMediaPage() {
 
   const deleteAsset = async (id: string) => {
     if (!confirm("Delete this file?")) return;
-    await fetch(`/api/admin/media/${id}`, { method: "DELETE" });
-    fetchAssets();
-    toast.success("Deleted");
+    const response = await fetch(`/api/admin/media/${id}`, { method: "DELETE" });
+    if (response.ok) {
+      fetchAssets();
+      toast.success("Deleted");
+    } else {
+      toast.error("Could not delete this file");
+    }
   };
 
   const formatSize = (bytes: number) => {
@@ -86,6 +93,16 @@ export default function AdminMediaPage() {
           >
             <option value="general">General</option>
             <option value="profile">Profile</option>
+            <option value="education">Education</option>
+            <option value="experience">Experience</option>
+            <option value="leadership">Leadership</option>
+            <option value="research">Research</option>
+            <option value="projects">Projects</option>
+            <option value="skills">Skills</option>
+            <option value="certificates">Certificates</option>
+            <option value="awards">Awards</option>
+            <option value="volunteer">Volunteer</option>
+            <option value="testimonials">Testimonials</option>
             <option value="blog">Blog</option>
             <option value="gallery">Gallery</option>
             <option value="documents">Documents</option>

@@ -26,8 +26,8 @@ export default function AdminResearchPage() {
         { name: "keywords", label: "Keywords (comma-separated)", type: "json-array" },
         { name: "methods", label: "Methods (comma-separated)", type: "json-array" },
         { name: "publicationLink", label: "Publication Link" },
-        { name: "pdfUrl", label: "PDF URL" },
-        { name: "imageUrl", label: "Image URL" },
+        { name: "pdfUrl", label: "Research paper (PDF)", type: "media", folder: "research" },
+        { name: "imageUrl", label: "Research visual", type: "media", folder: "research" },
         { name: "featured", label: "Featured", type: "checkbox" },
         { name: "published", label: "Published", type: "checkbox" },
       ]}

@@ -48,6 +48,7 @@ model Education {
   institution  String
   degree       String
   field        String?
+  imageUrl     String?
   startDate    String?
   endDate      String?
   current      Boolean  @default(false)
@@ -64,6 +65,7 @@ model Experience {
   title          String
   organization   String
   location       String?
+  imageUrl       String?
   startDate      String?
   endDate        String?
   current        Boolean  @default(false)
@@ -80,6 +82,7 @@ model Leadership {
   id           String   @id @default(cuid())
   title        String
   organization String
+  imageUrl     String?
   startDate    String?
   endDate      String?
   current      Boolean  @default(false)
@@ -148,6 +151,7 @@ model Project {
 model SkillCategory {
   id        String   @id @default(cuid())
   name      String
+  imageUrl  String?
   sortOrder Int      @default(0)
   published Boolean  @default(true)
   skills    Skill[]
@@ -187,6 +191,7 @@ model Award {
   issuer      String?
   date        String?
   description String?
+  imageUrl    String?
   sortOrder   Int      @default(0)
   published   Boolean  @default(true)
   createdAt   DateTime @default(now())
@@ -197,6 +202,7 @@ model Volunteer {
   id           String   @id @default(cuid())
   title        String
   organization String?
+  imageUrl     String?
   startDate    String?
   endDate      String?
   current      Boolean  @default(false)

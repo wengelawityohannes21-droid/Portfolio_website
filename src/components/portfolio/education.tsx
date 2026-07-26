@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { GraduationCap } from "lucide-react";
 import { Reveal } from "@/components/portfolio/reveal";
 import { SectionHeading } from "@/components/portfolio/section-heading";
@@ -45,35 +46,50 @@ export function Education({ items }: EducationProps) {
                       <GraduationCap className="h-4 w-4" />
                     </span>
 
-                    <div className="card-surface">
-                      <p className="text-sm font-medium text-brand">
-                        {formatPeriod(item)}
-                      </p>
-                      <h3 className="mt-2 text-xl font-semibold text-ink dark:text-white">
-                        {item.degree}
-                      </h3>
-                      <p className="mt-1 text-gray-600 dark:text-gray-400">
-                        {item.institution}
-                        {item.field ? ` · ${item.field}` : ""}
-                      </p>
-                      {item.description ? (
-                        <p className="mt-4 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-                          {item.description}
+                    <div className="card-surface overflow-hidden p-0">
+                      {item.imageUrl ? (
+                        <div className="relative aspect-[16/8] overflow-hidden">
+                          <Image
+                            src={item.imageUrl}
+                            alt={item.institution}
+                            fill
+                            unoptimized
+                            className="object-cover transition-transform duration-700 hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                          />
+                          <div className="image-veil" />
+                        </div>
+                      ) : null}
+                      <div className="p-6">
+                        <p className="text-sm font-medium text-brand">
+                          {formatPeriod(item)}
                         </p>
-                      ) : null}
-                      {item.achievements.length > 0 ? (
-                        <ul className="mt-4 space-y-2">
-                          {item.achievements.map((achievement) => (
-                            <li
-                              key={achievement}
-                              className="flex gap-2 text-sm text-gray-600 dark:text-gray-400"
-                            >
-                              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
-                              {achievement}
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
+                        <h3 className="mt-2 text-xl font-semibold text-ink dark:text-white">
+                          {item.degree}
+                        </h3>
+                        <p className="mt-1 text-gray-600 dark:text-gray-400">
+                          {item.institution}
+                          {item.field ? ` · ${item.field}` : ""}
+                        </p>
+                        {item.description ? (
+                          <p className="mt-4 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                            {item.description}
+                          </p>
+                        ) : null}
+                        {item.achievements.length > 0 ? (
+                          <ul className="mt-4 space-y-2">
+                            {item.achievements.map((achievement) => (
+                              <li
+                                key={achievement}
+                                className="flex gap-2 text-sm text-gray-600 dark:text-gray-400"
+                              >
+                                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                                {achievement}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -9,7 +9,7 @@ export default function AdminGalleryPage() {
       fields={[
         { name: "title", label: "Title", required: true },
         { name: "description", label: "Description", type: "textarea" },
-        { name: "imageUrl", label: "Image URL", required: true },
+        { name: "imageUrl", label: "Gallery image", type: "media", folder: "gallery", required: true },
         { name: "category", label: "Category" },
         { name: "published", label: "Published", type: "checkbox" },
       ]}

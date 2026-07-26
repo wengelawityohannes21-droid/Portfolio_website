@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Trophy } from "lucide-react";
 import { Reveal } from "@/components/portfolio/reveal";
 import { SectionHeading } from "@/components/portfolio/section-heading";
@@ -25,10 +26,23 @@ export function Awards({ items }: AwardsProps) {
         <div className="mx-auto grid max-w-4xl gap-4">
           {items.map((item, index) => (
             <Reveal key={item.id} delay={index * 0.08}>
-              <article className="card-surface flex gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand dark:bg-brand/10">
-                  <Trophy className="h-5 w-5" />
-                </div>
+              <article className="card-surface flex items-start gap-4">
+                {item.imageUrl ? (
+                  <div className="relative h-20 w-24 shrink-0 overflow-hidden rounded-2xl bg-gray-100 sm:h-24 sm:w-32 dark:bg-gray-800">
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.title}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                      sizes="128px"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand dark:bg-brand/10">
+                    <Trophy className="h-5 w-5" />
+                  </div>
+                )}
                 <div>
                   <h3 className="text-lg font-semibold text-ink dark:text-white">
                     {item.title}

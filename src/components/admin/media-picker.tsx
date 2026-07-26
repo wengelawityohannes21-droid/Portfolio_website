@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { Check, ImageIcon, Loader2, Upload, X } from "lucide-react";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 type MediaAsset = {
@@ -64,7 +65,13 @@ export function MediaPicker({
         onChange(asset.url);
         setOpen(false);
         fetchAssets();
+        toast.success("Media uploaded");
+      } else {
+        const result = await res.json().catch(() => null);
+        toast.error(result?.error || "Upload failed");
       }
+    } catch {
+      toast.error("Upload failed");
     } finally {
       setUploading(false);
     }

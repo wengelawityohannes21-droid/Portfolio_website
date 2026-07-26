@@ -14,17 +14,27 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { FormField } from "@/components/admin/form-field";
+import { MediaPicker } from "@/components/admin/media-picker";
 import { SortableList } from "@/components/admin/sortable-list";
 import { cn, parseJsonArray } from "@/lib/utils";
 
 export type CrudField = {
   name: string;
   label: string;
-  type?: "text" | "textarea" | "date" | "number" | "checkbox" | "select" | "json-array";
+  type?:
+    | "text"
+    | "textarea"
+    | "date"
+    | "number"
+    | "checkbox"
+    | "select"
+    | "json-array"
+    | "media";
   placeholder?: string;
   options?: { label: string; value: string }[];
   required?: boolean;
   rows?: number;
+  folder?: string;
 };
 
 export type CrudItem = {
@@ -204,6 +214,18 @@ export function SectionCrud({
           label={field.label}
           checked={!!value}
           onChange={(checked) => setFormData((d) => ({ ...d, [field.name]: checked }))}
+        />
+      );
+    }
+
+    if (field.type === "media") {
+      return (
+        <MediaPicker
+          key={field.name}
+          label={field.label}
+          folder={field.folder ?? resource}
+          value={String(value ?? "")}
+          onChange={(url) => setFormData((data) => ({ ...data, [field.name]: url }))}
         />
       );
     }

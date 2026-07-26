@@ -9,6 +9,7 @@ export default function AdminLeadershipPage() {
       fields={[
         { name: "title", label: "Role Title", required: true },
         { name: "organization", label: "Organization", required: true },
+        { name: "imageUrl", label: "Leadership or event image", type: "media" },
         { name: "startDate", label: "Start Date", type: "date" },
         { name: "endDate", label: "End Date", type: "date" },
         { name: "current", label: "Current role", type: "checkbox" },

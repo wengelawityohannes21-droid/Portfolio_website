@@ -12,6 +12,7 @@ export default function AdminExperiencePage() {
         { name: "title", label: "Job Title", required: true },
         { name: "organization", label: "Organization", required: true },
         { name: "location", label: "Location" },
+        { name: "imageUrl", label: "Workplace or role image", type: "media" },
         { name: "startDate", label: "Start Date", type: "date" },
         { name: "endDate", label: "End Date", type: "date" },
         { name: "current", label: "Currently working here", type: "checkbox" },

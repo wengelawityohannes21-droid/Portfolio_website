@@ -6,6 +6,7 @@ import { X, ZoomIn } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Reveal } from "@/components/portfolio/reveal";
 import { SectionHeading } from "@/components/portfolio/section-heading";
+import { cn } from "@/lib/utils";
 import type { GalleryItemData } from "@/types/portfolio";
 
 type GalleryProps = {
@@ -29,13 +30,21 @@ export function Gallery({ items }: GalleryProps) {
           description="Professional portraits, conferences, community work, and research in the field."
         />
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:auto-rows-[190px] lg:grid-cols-4">
           {items.map((item, index) => (
-            <Reveal key={item.id} delay={index * 0.05}>
+            <Reveal
+              key={item.id}
+              delay={index * 0.05}
+              className={cn(
+                "h-full",
+                index % 7 === 0 && "lg:col-span-2 lg:row-span-2",
+                index % 7 === 3 && "lg:col-span-2"
+              )}
+            >
               <button
                 type="button"
                 onClick={() => setActiveItem(item)}
-                className="group relative aspect-square overflow-hidden rounded-2xl border border-gray-200 bg-gray-100 text-left shadow-soft transition-all hover:shadow-card dark:border-gray-800 dark:bg-gray-800"
+                className="group relative h-full min-h-64 w-full overflow-hidden rounded-3xl border border-gray-200 bg-gray-100 text-left shadow-soft transition-all hover:-translate-y-1 hover:shadow-card sm:min-h-72 lg:min-h-0 dark:border-gray-800 dark:bg-gray-800"
               >
                 <Image
                   src={item.imageUrl}
@@ -46,8 +55,8 @@ export function Gallery({ items }: GalleryProps) {
                   sizes="(max-width: 768px) 50vw, 25vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-80 transition-opacity group-hover:opacity-100" />
-                <div className="absolute inset-x-0 bottom-0 p-4">
-                  <p className="text-sm font-medium text-white">{item.title}</p>
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <p className="text-base font-semibold text-white">{item.title}</p>
                   {item.category ? (
                     <p className="mt-1 text-xs text-white/80">{item.category}</p>
                   ) : null}

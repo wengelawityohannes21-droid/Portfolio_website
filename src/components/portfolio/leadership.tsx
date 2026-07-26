@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Crown } from "lucide-react";
 import { Reveal } from "@/components/portfolio/reveal";
 import { SectionHeading } from "@/components/portfolio/section-heading";
@@ -31,6 +32,19 @@ export function Leadership({ items }: LeadershipProps) {
           {items.map((item, index) => (
             <Reveal key={item.id} delay={index * 0.06}>
               <article className="card-surface flex h-full flex-col">
+                {item.imageUrl ? (
+                  <div className="relative mb-5 aspect-[16/9] overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-800">
+                    <Image
+                      src={item.imageUrl}
+                      alt={`${item.organization} leadership`}
+                      fill
+                      unoptimized
+                      className="object-cover transition-transform duration-700 hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                    <div className="image-veil opacity-50" />
+                  </div>
+                ) : null}
                 <div className="mb-4 flex items-start justify-between gap-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand dark:bg-brand/10">
                     <Crown className="h-5 w-5" />

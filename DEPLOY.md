@@ -47,6 +47,9 @@ datasource db {
 | `NEXTAUTH_SECRET` | long random string |
 | `ADMIN_EMAIL` | your email |
 | `ADMIN_PASSWORD` | strong password |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL (for persistent media) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service-role key |
+| `SUPABASE_STORAGE_BUCKET` | `portfolio-media` |
 
 3. Deploy
 
@@ -68,7 +71,13 @@ After this, log in at `https://your-site.vercel.app/admin/login`. Do not run the
 
 Open `https://your-site.vercel.app/admin/login` and sign in.
 
-Upload new photos/PDFs via **Admin → Media**. Files in `public/uploads` that are committed to git (like your profile photo) ship with the deploy. New uploads on Vercel need blob/storage for persistence — use Media for now and we can add Vercel Blob later if you want.
+To make Admin uploads persistent on Vercel:
+
+1. Create a public bucket named `portfolio-media` in Supabase Storage.
+2. Add the three Supabase variables listed above to Vercel.
+3. Redeploy, then upload photos or PDFs from any section form or **Admin → Media**.
+
+The service-role key is server-only and must never be prefixed with `NEXT_PUBLIC_`. Local development still falls back to `public/uploads` when Supabase is not configured.
 
 ## Local vs production
 

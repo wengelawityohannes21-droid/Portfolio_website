@@ -12,6 +12,7 @@ export default function AdminEducationPage() {
         { name: "institution", label: "Institution", required: true },
         { name: "degree", label: "Degree", required: true },
         { name: "field", label: "Field of Study" },
+        { name: "imageUrl", label: "Campus, institution, or program image", type: "media" },
         { name: "startDate", label: "Start Date", type: "date" },
         { name: "endDate", label: "End Date", type: "date" },
         { name: "current", label: "Currently studying", type: "checkbox" },

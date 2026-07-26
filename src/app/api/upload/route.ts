@@ -29,6 +29,45 @@ async function optimizeImage(buffer: Buffer) {
   }
 }
 
+function encodeStoragePath(value: string) {
+  return value.split("/").map(encodeURIComponent).join("/");
+}
+
+async function uploadToSupabase(
+  objectPath: string,
+  data: Uint8Array,
+  contentType: string
+) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const bucket = process.env.SUPABASE_STORAGE_BUCKET || "portfolio-media";
+
+  if (!supabaseUrl || !serviceKey) return null;
+
+  const encodedBucket = encodeURIComponent(bucket);
+  const encodedPath = encodeStoragePath(objectPath);
+  const response = await fetch(
+    `${supabaseUrl}/storage/v1/object/${encodedBucket}/${encodedPath}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${serviceKey}`,
+        apikey: serviceKey,
+        "Content-Type": contentType,
+        "x-upsert": "false",
+      },
+      body: Buffer.from(data),
+    }
+  );
+
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`Supabase upload failed (${response.status}): ${detail}`);
+  }
+
+  return `${supabaseUrl}/storage/v1/object/public/${encodedBucket}/${encodedPath}`;
+}
+
 export async function POST(req: NextRequest) {
   const { error } = await requireAdmin();
   if (error) return error;
@@ -44,8 +83,6 @@ export async function POST(req: NextRequest) {
     }
 
     const safeFolder = folder.replace(/[^a-zA-Z0-9-_]/g, "");
-    const uploadsDir = path.join(process.cwd(), "public", "uploads", safeFolder);
-    await mkdir(uploadsDir, { recursive: true });
 
     const ext = path.extname(file.name) || "";
     const baseName = path
@@ -72,10 +109,26 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const finalPath = path.join(uploadsDir, finalFilename);
-    await writeFile(finalPath, finalBuffer);
+    const objectPath = `${safeFolder}/${finalFilename}`;
+    let url = await uploadToSupabase(objectPath, finalBuffer, mimeType);
 
-    const url = `/uploads/${safeFolder}/${finalFilename}`;
+    if (!url) {
+      if (process.env.VERCEL) {
+        return NextResponse.json(
+          {
+            error:
+              "Cloud media storage is not configured. Add NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Vercel.",
+          },
+          { status: 503 }
+        );
+      }
+
+      const uploadsDir = path.join(process.cwd(), "public", "uploads", safeFolder);
+      await mkdir(uploadsDir, { recursive: true });
+      const finalPath = path.join(uploadsDir, finalFilename);
+      await writeFile(finalPath, finalBuffer);
+      url = `/uploads/${safeFolder}/${finalFilename}`;
+    }
 
     const asset = await prisma.mediaAsset.create({
       data: {
