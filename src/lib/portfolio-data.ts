@@ -78,13 +78,37 @@ export async function getPortfolioData(): Promise<PortfolioData> {
     }),
   ]);
 
-  if (!profile) {
-    throw new Error("Profile not found. Run db:seed to populate the database.");
-  }
+  // Fall back to an elegant placeholder instead of crashing the build/page when
+  // the database hasn't been seeded yet (e.g. a fresh production database).
+  const resolvedProfile: NonNullable<typeof profile> =
+    profile ?? {
+      id: "placeholder",
+      fullName: "Your Name",
+      headline: "Add your headline in Admin → Profile",
+      tagline: "Run the database seed, or fill in your profile from the admin dashboard.",
+      typingPhrases: "[]",
+      bio: "This is placeholder content. Log in to /admin to add your real profile information.",
+      mission: null,
+      passion: null,
+      careerGoals: null,
+      researchInterests: null,
+      photoUrl: null,
+      cvUrl: null,
+      email: "",
+      phone: null,
+      location: null,
+      linkedinUrl: null,
+      githubUrl: null,
+      websiteUrl: null,
+      twitterUrl: null,
+      instagramUrl: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
   const resolvedSettings = settings ?? {
     id: "default",
-    siteName: profile.fullName,
+    siteName: resolvedProfile.fullName,
     siteUrl: "http://localhost:3000",
     seoTitle: null,
     seoDescription: null,
@@ -99,7 +123,7 @@ export async function getPortfolioData(): Promise<PortfolioData> {
     showBlog: true,
     showTestimonials: true,
     visibleSections: "{}",
-    resumeUrl: profile.cvUrl,
+    resumeUrl: resolvedProfile.cvUrl,
   };
 
   const visibleSections = parseVisibleSections(
@@ -115,26 +139,26 @@ export async function getPortfolioData(): Promise<PortfolioData> {
 
   return {
     profile: {
-      id: profile.id,
-      fullName: profile.fullName,
-      headline: profile.headline,
-      tagline: profile.tagline,
-      typingPhrases: parseJsonArray(profile.typingPhrases),
-      bio: profile.bio,
-      mission: profile.mission,
-      passion: profile.passion,
-      careerGoals: profile.careerGoals,
-      researchInterests: profile.researchInterests,
-      photoUrl: profile.photoUrl,
-      cvUrl: profile.cvUrl,
-      email: profile.email,
-      phone: profile.phone,
-      location: profile.location,
-      linkedinUrl: profile.linkedinUrl,
-      githubUrl: profile.githubUrl,
-      websiteUrl: profile.websiteUrl,
-      twitterUrl: profile.twitterUrl,
-      instagramUrl: profile.instagramUrl,
+      id: resolvedProfile.id,
+      fullName: resolvedProfile.fullName,
+      headline: resolvedProfile.headline,
+      tagline: resolvedProfile.tagline,
+      typingPhrases: parseJsonArray(resolvedProfile.typingPhrases),
+      bio: resolvedProfile.bio,
+      mission: resolvedProfile.mission,
+      passion: resolvedProfile.passion,
+      careerGoals: resolvedProfile.careerGoals,
+      researchInterests: resolvedProfile.researchInterests,
+      photoUrl: resolvedProfile.photoUrl,
+      cvUrl: resolvedProfile.cvUrl,
+      email: resolvedProfile.email,
+      phone: resolvedProfile.phone,
+      location: resolvedProfile.location,
+      linkedinUrl: resolvedProfile.linkedinUrl,
+      githubUrl: resolvedProfile.githubUrl,
+      websiteUrl: resolvedProfile.websiteUrl,
+      twitterUrl: resolvedProfile.twitterUrl,
+      instagramUrl: resolvedProfile.instagramUrl,
     },
     settings: {
       id: resolvedSettings.id,
