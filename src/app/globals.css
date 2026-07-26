@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: "Inter", system-ui, sans-serif;
+  --background: 249 250 251;
+  --foreground: 31 41 55;
+  --border: 229 231 235;
+  --brand: 22 163 74;
+  --brand-foreground: 255 255 255;
+  --muted: 107 114 128;
+  --card: 255 255 255;
+  --selection: 22 163 74;
+}
+
+.dark {
+  --background: 17 24 39;
+  --foreground: 243 244 246;
+  --border: 55 65 81;
+  --brand: 34 197 94;
+  --brand-foreground: 255 255 255;
+  --muted: 156 163 175;
+  --card: 31 41 55;
+  --selection: 34 197 94;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-canvas text-ink antialiased;
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+  }
+
+  ::selection {
+    background-color: rgb(var(--selection) / 0.2);
+    color: rgb(var(--foreground));
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand/40 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .card-surface {
+    @apply rounded-2xl border border-gray-200 bg-white p-6 shadow-soft transition-shadow hover:shadow-card dark:border-gray-800 dark:bg-gray-900;
+  }
+
+  .glass-nav {
+    @apply border-b border-gray-200/70 bg-white/80 backdrop-blur-xl dark:border-gray-800/70 dark:bg-gray-900/80;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-5 py-3 text-sm font-medium text-white shadow-soft transition-all hover:bg-brand-700 hover:shadow-card focus-visible:ring-brand/40 active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-3 text-sm font-medium text-ink shadow-soft transition-all hover:border-brand/30 hover:text-brand focus-visible:ring-brand/40 active:scale-[0.98] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:border-brand/40 dark:hover:text-brand;
+  }
+
+  .prose-portfolio {
+    @apply prose prose-gray max-w-none dark:prose-invert;
+    @apply prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-ink dark:prose-headings:text-white;
+    @apply prose-p:leading-relaxed prose-p:text-gray-600 dark:prose-p:text-gray-300;
+    @apply prose-a:text-brand prose-a:no-underline hover:prose-a:underline;
+  }
+}

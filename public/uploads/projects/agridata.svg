@@ -1,0 +1,8 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0FDF4"/><stop offset="100%" stop-color="#DCFCE7"/></linearGradient></defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <circle cx="980" cy="140" r="120" fill="#16A34A" opacity="0.12"/>
+  <circle cx="160" cy="680" r="180" fill="#16A34A" opacity="0.08"/>
+  <text x="600" y="390" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="42" fill="#1F2937" font-weight="700">AgriData Connect</text>
+  <text x="600" y="450" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" fill="#6B7280">Agricultural Intelligence Platform</text>
+</svg>

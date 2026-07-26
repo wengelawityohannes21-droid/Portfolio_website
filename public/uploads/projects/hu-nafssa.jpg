@@ -1,0 +1,6 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#F9FAFB"/>
+  <rect x="80" y="80" width="1040" height="640" rx="32" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="600" y="390" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="40" fill="#16A34A" font-weight="700">HU-NaFSSA</text>
+  <text x="600" y="450" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="20" fill="#6B7280">Nutrition Student Leadership Platform</text>
+</svg>
