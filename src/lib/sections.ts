@@ -59,10 +59,10 @@ export function parseVisibleSections(value?: string | null): VisibleSections {
 }
 
 export function isSectionVisible(
-  sections: VisibleSections,
+  sections: VisibleSections | undefined | null,
   key: string,
   fallback = true
 ) {
-  if (typeof sections[key] === "boolean") return sections[key];
+  if (sections && typeof sections[key] === "boolean") return sections[key];
   return fallback;
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Heart } from "lucide-react";
+import { isSectionVisible } from "@/lib/sections";
 import type { ProfileData, SiteSettingsData } from "@/types/portfolio";
 
 type FooterProps = {
@@ -34,7 +35,7 @@ export function Footer({ profile, settings }: FooterProps) {
                 { href: "#contact", label: "Contact", key: "contact" },
                 { href: "/blog", label: "Blog", key: "blog" },
               ]
-                .filter((link) => settings.visibleSections[link.key] !== false)
+                .filter((link) => isSectionVisible(settings.visibleSections, link.key))
                 .map((link) => (
                 <li key={link.href}>
                   <a
