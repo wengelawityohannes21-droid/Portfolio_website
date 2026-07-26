@@ -21,7 +21,7 @@ export function Gallery({ items }: GalleryProps) {
   return (
     <section
       id="gallery"
-      className="section-padding bg-white dark:bg-gray-900/50"
+      className="section-padding bg-white/45 backdrop-blur-[2px] dark:bg-gray-900/35"
     >
       <div className="section-container">
         <SectionHeading

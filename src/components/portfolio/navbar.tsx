@@ -10,11 +10,9 @@ import { isSectionVisible, type VisibleSections } from "@/lib/sections";
 
 const navLinks = [
   { href: "#about", label: "About", key: "about" },
-  { href: "#education", label: "Education", key: "education" },
-  { href: "#experience", label: "Experience", key: "experience" },
-  { href: "#leadership", label: "Leadership", key: "leadership" },
+  { href: "#journey", label: "Journey", key: "journey" },
   { href: "#research", label: "Research", key: "research" },
-  { href: "#projects", label: "Projects", key: "projects" },
+  { href: "#projects", label: "Seeds", key: "projects" },
   { href: "#skills", label: "Skills", key: "skills" },
   { href: "#certifications", label: "Certifications", key: "certifications" },
   { href: "#awards", label: "Awards", key: "awards" },
@@ -53,7 +51,14 @@ export function Navbar({ siteName, visibleSections = {} }: NavbarProps) {
   }, [mobileOpen]);
 
   const filteredLinks = useMemo(
-    () => navLinks.filter((link) => isSectionVisible(visibleSections, link.key)),
+    () =>
+      navLinks.filter((link) =>
+        link.key === "journey"
+          ? ["education", "experience", "leadership"].some((key) =>
+              isSectionVisible(visibleSections, key)
+            )
+          : isSectionVisible(visibleSections, link.key)
+      ),
     [visibleSections]
   );
 

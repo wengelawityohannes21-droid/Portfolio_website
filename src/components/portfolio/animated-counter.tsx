@@ -9,6 +9,7 @@ type AnimatedCounterProps = {
   suffix?: string;
   prefix?: string;
   duration?: number;
+  minimumDigits?: number;
   className?: string;
 };
 
@@ -17,6 +18,7 @@ export function AnimatedCounter({
   suffix = "",
   prefix = "",
   duration = 1500,
+  minimumDigits = 1,
   className,
 }: AnimatedCounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -47,7 +49,7 @@ export function AnimatedCounter({
   return (
     <span ref={ref} className={cn("tabular-nums", className)}>
       {prefix}
-      {count}
+      {String(count).padStart(minimumDigits, "0")}
       {suffix}
     </span>
   );

@@ -62,7 +62,7 @@
   }
 
   .card-surface {
-    @apply rounded-3xl border border-gray-200/80 bg-white/90 p-6 shadow-soft backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand/20 hover:shadow-card dark:border-gray-800 dark:bg-gray-900/90;
+    @apply rounded-3xl border border-white/80 bg-white/65 p-6 shadow-soft backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-brand/20 hover:bg-white/85 hover:shadow-card dark:border-white/10 dark:bg-gray-900/60 dark:hover:bg-gray-900/80;
   }
 
   .glass-nav {
@@ -94,6 +94,29 @@
 
   .image-veil {
     @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent;
+  }
+
+  .living-glass {
+    @apply border border-white/70 bg-white/60 shadow-[0_24px_80px_rgba(15,55,35,0.09)] backdrop-blur-xl dark:border-white/10 dark:bg-gray-950/55;
+  }
+
+  .organic-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+  }
+
+  .paper-texture {
+    background-color: rgb(255 254 248 / 0.94);
+    background-image:
+      linear-gradient(rgb(22 101 52 / 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(22 101 52 / 0.025) 1px, transparent 1px);
+    background-size: 100% 32px, 32px 100%;
+  }
+
+  .dark .paper-texture {
+    background-color: rgb(17 24 39 / 0.94);
+    background-image:
+      linear-gradient(rgb(74 222 128 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(74 222 128 / 0.025) 1px, transparent 1px);
   }
 }
 

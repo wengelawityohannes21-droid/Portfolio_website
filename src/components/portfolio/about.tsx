@@ -35,7 +35,7 @@ export function About({ profile, settings }: AboutProps) {
   ].filter((item) => item.visible && item.value?.trim());
 
   return (
-    <section id="about" className="section-padding relative overflow-hidden bg-white dark:bg-gray-900/40">
+    <section id="about" className="section-padding relative overflow-hidden bg-white/45 backdrop-blur-[2px] dark:bg-gray-900/35">
       <div className="pointer-events-none absolute -left-24 top-24 h-72 w-72 rounded-full border border-brand/10" />
       <div className="pointer-events-none absolute -left-12 top-36 h-44 w-44 rounded-full border border-brand/10" />
       <div className="section-container">
