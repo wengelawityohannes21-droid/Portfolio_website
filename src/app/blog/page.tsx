@@ -5,6 +5,8 @@ import { ArrowLeft, Calendar } from "lucide-react";
 import { format } from "date-fns";
 import { getBlogPosts } from "@/lib/portfolio-data";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Blog",
   description:

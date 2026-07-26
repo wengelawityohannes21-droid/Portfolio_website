@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getPortfolioData } from "@/lib/portfolio-data";
 import { HomePage } from "@/components/portfolio/home-page";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getPortfolioData();
   const { profile, settings } = data;

@@ -1,9 +1,12 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { parseJsonArray } from "@/lib/utils";
 import { parseVisibleSections } from "@/lib/sections";
 import type { PortfolioData } from "@/types/portfolio";
 
 export async function getPortfolioData(): Promise<PortfolioData> {
+  noStore();
+
   const [
     profile,
     settings,
@@ -320,6 +323,8 @@ export async function getPortfolioData(): Promise<PortfolioData> {
 }
 
 export async function getBlogPosts() {
+  noStore();
+
   const posts = await prisma.blogPost.findMany({
     where: { status: "published" },
     orderBy: [{ sortOrder: "asc" }, { publishedAt: "desc" }],
@@ -344,6 +349,8 @@ export async function getBlogPosts() {
 }
 
 export async function getBlogPostBySlug(slug: string) {
+  noStore();
+
   const post = await prisma.blogPost.findFirst({
     where: { slug, status: "published" },
   });
