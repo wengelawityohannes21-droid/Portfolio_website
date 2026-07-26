@@ -50,15 +50,30 @@ datasource db {
 
 3. Deploy
 
-After the first deploy, set `NEXTAUTH_URL` to the real Vercel URL and redeploy.
+The build automatically runs `prisma db push`, which creates all tables in your Neon database on first deploy. After the first deploy, set `NEXTAUTH_URL` to the real Vercel URL and redeploy.
 
-## 5. Admin
+## 5. Seed the production database (one time only)
+
+The Neon database starts empty — no admin user, no profile content. Seed it once from your machine (never run this automatically in the build, since it wipes and re-creates Profile/SiteSettings, which would erase any edits you make later in the admin dashboard):
+
+```bash
+# Temporarily point at your Neon database, then run:
+set DATABASE_URL=postgresql://...your-neon-url...   (Windows PowerShell: $env:DATABASE_URL="...")
+npm run db:seed
+```
+
+After this, log in at `https://your-site.vercel.app/admin/login` and all future edits go through the dashboard — never re-run the seed script against production.
+
+## 6. Admin
 
 Open `https://your-site.vercel.app/admin/login` and sign in.
 
 Upload new photos/PDFs via **Admin → Media**. Files in `public/uploads` that are committed to git (like your profile photo) ship with the deploy. New uploads on Vercel need blob/storage for persistence — use Media for now and we can add Vercel Blob later if you want.
 
-## Local vs production tip
+## Local vs production
 
-- Local: `DATABASE_URL="file:./dev.db"` + `provider = "sqlite"`
-- Production: Neon URL + `provider = "postgresql"`
+Both environments now use the same `provider = "postgresql"` schema. For local development, either:
+- Point your local `.env` `DATABASE_URL` at the same Neon database (simplest), or
+- Run a local Postgres instance and use its connection string locally.
+
+(SQLite is no longer used — Prisma requires one provider per schema.)

@@ -4,7 +4,7 @@ generator client {
 
 // Local: sqlite | Production: switch to postgresql + Supabase DATABASE_URL
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
