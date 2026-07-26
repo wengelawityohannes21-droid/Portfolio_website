@@ -138,15 +138,6 @@ export function Hero({ profile, settings }: HeroProps) {
                 </div>
               </motion.div>
 
-              <div className="absolute -bottom-2 -left-4 rounded-2xl border border-white/70 bg-white/90 px-4 py-3 shadow-card backdrop-blur-xl dark:border-gray-700 dark:bg-gray-900/90 lg:bottom-14 lg:-left-12">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand">
-                  Focus
-                </p>
-                <p className="mt-1 text-sm font-semibold text-ink dark:text-white">
-                  Food systems & public health
-                </p>
-              </div>
-
               <div className="absolute -right-3 top-8 hidden rounded-2xl border border-emerald-200/30 bg-[#0d1f17]/90 px-4 py-3 text-white shadow-card backdrop-blur-xl sm:block lg:-right-8 lg:top-20">
                 <span className="inline-flex items-center gap-2 text-xs font-medium">
                   <span className="h-2 w-2 rounded-full bg-emerald-400" />
