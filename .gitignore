@@ -32,6 +32,9 @@ yarn-error.log*
 .env
 .env*.local
 
+# local extracts
+cv_extracted.txt
+
 # vercel
 .vercel
 
